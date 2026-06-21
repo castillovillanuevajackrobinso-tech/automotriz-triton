@@ -110,20 +110,19 @@
     }
     .card:hover { border-color: var(--rojo); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(224,32,32,0.15); }
 
-    .card-img {
-      width: 100%; height: 190px; object-fit: cover;
-      background: var(--gris-medio); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; position: relative; overflow: hidden;
+    .card-header {
+      background: linear-gradient(135deg, #1a0505 0%, #2a0a0a 100%);
+      border-bottom: 2px solid var(--rojo);
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
     }
-    .card-img img { width: 100%; height: 100%; object-fit: cover; }
-    .card-img .placeholder-icon { font-size: 4rem; opacity: 0.3; }
-
     .card-cat-tag {
-      position: absolute; top: 0.6rem; left: 0.6rem;
       background: var(--rojo); color: #fff;
       font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-      padding: 0.2rem 0.6rem; border-radius: 3px;
+      padding: 0.25rem 0.7rem; border-radius: 3px;
     }
+    .card-icon-large { font-size: 2rem; line-height: 1; }
 
     .card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
 
@@ -163,32 +162,32 @@
 
     .modal {
       background: var(--gris-oscuro); border: 1px solid var(--gris-borde);
-      border-radius: 12px; max-width: 780px; width: 100%;
+      border-radius: 12px; max-width: 520px; width: 100%;
       max-height: 90vh; overflow-y: auto;
-      display: grid; grid-template-columns: 1fr 1fr;
       animation: modalIn 0.2s ease;
     }
     @keyframes modalIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
-    @media (max-width: 600px) { .modal { grid-template-columns: 1fr; } }
 
-    .modal-img {
-      background: var(--gris-medio); min-height: 300px;
-      display: flex; align-items: center; justify-content: center; position: relative;
-      border-radius: 12px 0 0 12px; overflow: hidden;
+    .modal-header {
+      background: linear-gradient(135deg, #1a0505, #2a0a0a);
+      border-bottom: 2px solid var(--rojo);
+      border-radius: 12px 12px 0 0;
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      position: relative;
     }
-    @media (max-width: 600px) { .modal-img { border-radius: 12px 12px 0 0; min-height: 220px; } }
-    .modal-img img { width: 100%; height: 100%; object-fit: cover; }
-    .modal-img .placeholder-icon { font-size: 6rem; opacity: 0.25; }
-
-    .modal-info { padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .modal-header-left { display: flex; flex-direction: column; gap: 0.4rem; }
+    .modal-header-icon { font-size: 2.8rem; line-height: 1; }
     .modal-close {
       position: absolute; top: 1rem; right: 1rem;
-      background: rgba(0,0,0,0.6); border: none; color: #fff;
-      width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem;
+      background: rgba(0,0,0,0.5); border: none; color: #fff;
+      width: 32px; height: 32px; border-radius: 50%; font-size: 1rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s; z-index: 10;
+      transition: background 0.2s;
     }
     .modal-close:hover { background: var(--rojo); }
+
+    .modal-info { padding: 1.75rem 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
 
     .modal-cat { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--rojo); }
     .modal-num { font-size: 0.8rem; color: var(--gris-claro); font-family: monospace; }
@@ -287,16 +286,17 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="cerrarModal(event)">
   <div class="modal" id="modal">
-    <div class="modal-img" id="modal-img">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-cat" id="modal-cat"></div>
+        <div class="modal-nombre" id="modal-nombre"></div>
+        <div class="modal-num" id="modal-num"></div>
+        <div class="modal-marca" id="modal-marca"></div>
+      </div>
+      <span class="modal-header-icon" id="modal-icono">⚙️</span>
       <button class="modal-close" onclick="cerrarModal()">✕</button>
-      <span class="placeholder-icon" id="modal-placeholder">⚙️</span>
-      <img id="modal-foto" src="" alt="" style="display:none; position:absolute; inset:0;" />
     </div>
     <div class="modal-info">
-      <div class="modal-cat" id="modal-cat"></div>
-      <div class="modal-num" id="modal-num"></div>
-      <div class="modal-nombre" id="modal-nombre"></div>
-      <div class="modal-marca" id="modal-marca"></div>
       <div class="modal-specs-title">Especificaciones</div>
       <table class="modal-specs-table" id="modal-specs"></table>
       <div class="modal-compat-title">Compatibilidad</div>
@@ -643,14 +643,10 @@ function renderGrid() {
       `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
     ).join("");
 
-    const imgHtml = p.foto
-      ? `<img src="img/${p.foto}" alt="${p.nombre}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="placeholder-icon" style="display:none;">${p.icono}</div>`
-      : `<div class="placeholder-icon">${p.icono}</div>`;
-
     card.innerHTML = `
-      <div class="card-img">
-        <div class="card-cat-tag">${labelCategoria(p.categoria)}</div>
-        ${imgHtml}
+      <div class="card-header">
+        <span class="card-cat-tag">${labelCategoria(p.categoria)}</span>
+        <span class="card-icon-large">${p.icono}</span>
       </div>
       <div class="card-body">
         <div class="card-nombre">${resaltar(p.nombre)}</div>
@@ -676,21 +672,7 @@ function abrirModal(p) {
   document.getElementById("modal-num").textContent = "No. de parte: " + p.numero;
   document.getElementById("modal-nombre").textContent = p.nombre;
   document.getElementById("modal-marca").textContent = "Marca: " + p.marca;
-
-  const foto = document.getElementById("modal-foto");
-  const placeholder = document.getElementById("modal-placeholder");
-  placeholder.textContent = p.icono;
-
-  if (p.foto) {
-    foto.src = "img/" + p.foto;
-    foto.alt = p.nombre;
-    foto.style.display = "block";
-    foto.onerror = () => { foto.style.display = "none"; placeholder.style.display = "flex"; };
-    placeholder.style.display = "none";
-  } else {
-    foto.style.display = "none";
-    placeholder.style.display = "flex";
-  }
+  document.getElementById("modal-icono").textContent = p.icono;
 
   const specsTable = document.getElementById("modal-specs");
   specsTable.innerHTML = Object.entries(p.specs).map(([k, v]) =>
