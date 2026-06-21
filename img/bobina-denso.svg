@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#252525"/></linearGradient>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a1a3a"/><stop offset="30%" stop-color="#3a3a6a"/><stop offset="50%" stop-color="#5050a0"/><stop offset="70%" stop-color="#3a3a6a"/><stop offset="100%" stop-color="#1a1a3a"/></linearGradient>
+    <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#444"/><stop offset="40%" stop-color="#ccc"/><stop offset="60%" stop-color="#aaa"/><stop offset="100%" stop-color="#333"/></linearGradient>
+    <linearGradient id="rubberGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="40%" stop-color="#3a3a3a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#111"/></linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#bg)" rx="12"/>
+  <rect x="50" y="18" width="200" height="28" rx="4" fill="#1a3a8a"/>
+  <text x="150" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" letter-spacing="2">DENSO</text>
+  <text x="150" y="64" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#aaa" letter-spacing="1">FK20HR11  ·  Bobina Crayon</text>
+  <g transform="translate(150,240)">
+    <!-- Connector top -->
+    <rect x="-18" y="-155" width="36" height="22" rx="4" fill="url(#metalGrad)"/>
+    <rect x="-8" y="-160" width="16" height="8" rx="2" fill="#888"/>
+    <rect x="-5" y="-165" width="10" height="6" rx="1" fill="#aaa"/>
+    <!-- Body upper -->
+    <rect x="-20" y="-133" width="40" height="90" rx="6" fill="url(#bodyGrad)"/>
+    <!-- Denso logo strip -->
+    <rect x="-18" y="-110" width="36" height="18" rx="2" fill="#1a3a8a" opacity="0.8"/>
+    <text x="0" y="-97" text-anchor="middle" font-family="Arial Black,Arial" font-size="8" fill="white" font-weight="900">DENSO</text>
+    <!-- Wiring loom -->
+    <rect x="-20" y="-43" width="40" height="14" rx="3" fill="#888"/>
+    <!-- Boot/rubber lower -->
+    <path d="M-18,-29 L18,-29 L20,40 L-20,40 Z" rx="4" fill="url(#rubberGrad)"/>
+    <path d="M-20,40 L20,40 L16,80 L-16,80 Z" fill="#222"/>
+    <path d="M-16,80 L16,80 L12,115 L-12,115 Z" fill="#1a1a1a"/>
+    <ellipse cx="0" cy="115" rx="12" ry="5" fill="#111"/>
+    <!-- Metal tip -->
+    <rect x="-4" y="115" width="8" height="20" rx="2" fill="url(#metalGrad)"/>
+    <ellipse cx="0" cy="135" rx="4" ry="2" fill="#ccc"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#aaa">
+    <text x="20" y="340">Tensión:</text><text x="110" y="340" fill="#eee" font-weight="600">12V / 35 kV</text>
+    <text x="20" y="358">Tipo:</text><text x="110" y="358" fill="#eee" font-weight="600">Bobina crayon</text>
+    <text x="20" y="376">Res. primaria:</text><text x="130" y="376" fill="#eee" font-weight="600">0.5–0.7 Ω</text>
+    <text x="20" y="394">Res. secundaria:</text><text x="145" y="394" fill="#eee" font-weight="600">10.8–14.8 kΩ</text>
+  </g>
+  <rect x="0" y="408" width="300" height="12" rx="0" fill="#1a3a8a"/>
+</svg>

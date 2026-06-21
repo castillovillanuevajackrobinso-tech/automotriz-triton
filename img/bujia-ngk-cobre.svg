@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#252525"/></linearGradient>
+    <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="20%" stop-color="#c0c0c0"/><stop offset="50%" stop-color="#e8e8e8"/><stop offset="80%" stop-color="#b0b0b0"/><stop offset="100%" stop-color="#4a4a4a"/></linearGradient>
+    <linearGradient id="ceramicGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c8c0a0"/><stop offset="20%" stop-color="#f5f0e0"/><stop offset="50%" stop-color="#fffdf5"/><stop offset="80%" stop-color="#e8e0c8"/><stop offset="100%" stop-color="#b8b0a0"/></linearGradient>
+    <linearGradient id="hexGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2a2a2a"/><stop offset="15%" stop-color="#888"/><stop offset="50%" stop-color="#aaa"/><stop offset="85%" stop-color="#777"/><stop offset="100%" stop-color="#222"/></linearGradient>
+    <linearGradient id="threadGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#333"/><stop offset="30%" stop-color="#999"/><stop offset="50%" stop-color="#bbb"/><stop offset="70%" stop-color="#888"/><stop offset="100%" stop-color="#333"/></linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#bg)" rx="12"/>
+  <rect x="60" y="18" width="180" height="28" rx="4" fill="#e02020"/>
+  <text x="150" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" letter-spacing="2">NGK</text>
+  <text x="150" y="64" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#aaa" letter-spacing="1">BKR5E  ·  V-Power Cobre</text>
+  <g transform="translate(150,240)">
+    <rect x="-10" y="-162" width="20" height="16" rx="3" fill="url(#metalGrad)"/>
+    <rect x="-6" y="-152" width="12" height="5" rx="1" fill="#555"/>
+    <path d="M-13,-146 L13,-146 L16,-100 L-16,-100 Z" fill="url(#ceramicGrad)"/>
+    <ellipse cx="0" cy="-130" rx="16" ry="3.5" fill="#d8d0b8" opacity="0.6"/>
+    <ellipse cx="0" cy="-117" rx="15" ry="3" fill="#d0c8b0" opacity="0.5"/>
+    <ellipse cx="0" cy="-104" rx="14.5" ry="2.5" fill="#c8c0a8" opacity="0.5"/>
+    <path d="M-16,-100 L16,-100 L13,-78 L-13,-78 Z" fill="url(#ceramicGrad)"/>
+    <rect x="-15" y="-91" width="30" height="6" rx="1" fill="#e02020"/>
+    <rect x="-22" y="-78" width="44" height="38" rx="3" fill="url(#hexGrad)"/>
+    <line x1="-22" y1="-78" x2="-22" y2="-40" stroke="#555" stroke-width="1" opacity="0.5"/>
+    <line x1="22" y1="-78" x2="22" y2="-40" stroke="#ddd" stroke-width="1" opacity="0.4"/>
+    <text x="0" y="-54" text-anchor="middle" font-family="Arial" font-size="8" fill="#777" letter-spacing="1">5/8"</text>
+    <path d="M-20,-40 L20,-40 L18,-30 L-18,-30 Z" fill="#888"/>
+    <path d="M-18,-30 L18,-30 L17,-26 L-17,-26 Z" fill="#aaa"/>
+    <rect x="-13" y="-26" width="26" height="62" rx="1" fill="url(#threadGrad)"/>
+    <line x1="-13" y1="-20" x2="13" y2="-20" stroke="#555" stroke-width="1.5"/>
+    <line x1="-13" y1="-14" x2="13" y2="-14" stroke="#444" stroke-width="1"/>
+    <line x1="-13" y1="-8" x2="13" y2="-8" stroke="#555" stroke-width="1.5"/>
+    <line x1="-13" y1="-2" x2="13" y2="-2" stroke="#444" stroke-width="1"/>
+    <line x1="-13" y1="4" x2="13" y2="4" stroke="#555" stroke-width="1.5"/>
+    <line x1="-13" y1="10" x2="13" y2="10" stroke="#444" stroke-width="1"/>
+    <line x1="-13" y1="16" x2="13" y2="16" stroke="#555" stroke-width="1.5"/>
+    <line x1="-13" y1="22" x2="13" y2="22" stroke="#444" stroke-width="1"/>
+    <line x1="-13" y1="28" x2="13" y2="28" stroke="#555" stroke-width="1.5"/>
+    <path d="M-13,36 L13,36 L10,50 L-10,50 Z" fill="#888"/>
+    <path d="M-10,50 L10,50 L7,58 L-7,58 Z" fill="#777"/>
+    <!-- Copper center electrode -->
+    <rect x="-2.5" y="54" width="5" height="12" rx="1" fill="#c87020"/>
+    <rect x="-1.5" y="64" width="3" height="5" rx="0.5" fill="#e89030"/>
+    <rect x="6" y="42" width="10" height="4" rx="1" fill="#bbb"/>
+    <rect x="13" y="46" width="4" height="16" rx="1" fill="#bbb"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#aaa">
+    <text x="20" y="340">Tipo:</text><text x="100" y="340" fill="#eee" font-weight="600">Cobre V-Power</text>
+    <text x="20" y="358">Gap:</text><text x="100" y="358" fill="#eee" font-weight="600">0.8 mm</text>
+    <text x="20" y="376">Rosca:</text><text x="100" y="376" fill="#eee" font-weight="600">14 mm x 1.25</text>
+    <text x="20" y="394">Aplicación:</text><text x="110" y="394" fill="#eee" font-weight="600">Universal gasolina</text>
+  </g>
+  <rect x="0" y="408" width="300" height="12" rx="0" fill="#e02020"/>
+</svg>

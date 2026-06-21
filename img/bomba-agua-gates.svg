@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#252525"/></linearGradient>
+    <linearGradient id="alum" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="30%" stop-color="#c0c0c0"/><stop offset="50%" stop-color="#e0e0e0"/><stop offset="70%" stop-color="#b0b0b0"/><stop offset="100%" stop-color="#3a3a3a"/></linearGradient>
+    <radialGradient id="impellerGrad" cx="50%" cy="50%"><stop offset="0%" stop-color="#c0c0c0"/><stop offset="70%" stop-color="#888"/><stop offset="100%" stop-color="#555"/></radialGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#bg)" rx="12"/>
+  <rect x="50" y="18" width="200" height="28" rx="4" fill="#cc1111"/>
+  <text x="150" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" letter-spacing="2">GATES</text>
+  <text x="150" y="64" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#aaa" letter-spacing="1">36486  ·  Bomba de Agua</text>
+  <g transform="translate(150,225)">
+    <!-- Housing body (volute) -->
+    <path d="M-75,-90 Q-90,-90 -90,-70 L-90,40 Q-90,60 -70,60 L70,60 Q90,60 90,40 L90,-70 Q90,-90 75,-90 Z" fill="url(#alum)"/>
+    <!-- Inlet port (top) -->
+    <rect x="-20" y="-110" width="40" height="22" rx="6" fill="#aaa"/>
+    <ellipse cx="0" cy="-110" rx="20" ry="6" fill="#888"/>
+    <!-- Outlet port (side right) -->
+    <rect x="88" y="-20" width="28" height="30" rx="6" fill="#aaa"/>
+    <ellipse cx="116" cy="-5" rx="6" ry="15" fill="#888"/>
+    <!-- Impeller visible through cutaway -->
+    <circle cx="0" cy="-10" r="55" fill="#555" stroke="#888" stroke-width="2"/>
+    <circle cx="0" cy="-10" r="50" fill="url(#impellerGrad)"/>
+    <!-- Impeller blades (6 blades) -->
+    <line x1="0" y1="-10" x2="0" y2="-50" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="-10" x2="34" y2="-37" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="-10" x2="43" y2="12" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="-10" x2="0" y2="30" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="-10" x2="-34" y2="12" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="-10" x2="-43" y2="-37" stroke="#777" stroke-width="5" stroke-linecap="round"/>
+    <!-- Center hub + shaft -->
+    <circle cx="0" cy="-10" r="14" fill="#666"/>
+    <circle cx="0" cy="-10" r="8" fill="#444"/>
+    <circle cx="0" cy="-10" r="4" fill="#888"/>
+    <!-- Pulley mount flange -->
+    <rect x="-28" y="48" width="56" height="18" rx="3" fill="#aaa"/>
+    <circle cx="-16" cy="57" r="5" fill="#666"/>
+    <circle cx="0" cy="57" r="5" fill="#666"/>
+    <circle cx="16" cy="57" r="5" fill="#666"/>
+    <!-- Mounting bolt holes -->
+    <circle cx="-62" cy="-60" r="7" fill="#1a1a1a" stroke="#888" stroke-width="2"/>
+    <circle cx="62" cy="-60" r="7" fill="#1a1a1a" stroke="#888" stroke-width="2"/>
+    <circle cx="-62" cy="30" r="7" fill="#1a1a1a" stroke="#888" stroke-width="2"/>
+    <circle cx="62" cy="30" r="7" fill="#1a1a1a" stroke="#888" stroke-width="2"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#aaa">
+    <text x="20" y="340">Impulsor:</text><text x="110" y="340" fill="#eee" font-weight="600">Metal · 6 aspas</text>
+    <text x="20" y="358">Sello:</text><text x="110" y="358" fill="#eee" font-weight="600">Mecánico</text>
+    <text x="20" y="376">Incluye:</text><text x="110" y="376" fill="#eee" font-weight="600">Junta de montaje</text>
+    <text x="20" y="394">Motor:</text><text x="100" y="394" fill="#eee" font-weight="600">Toyota Corolla 1.8L 03-08</text>
+  </g>
+  <rect x="0" y="408" width="300" height="12" rx="0" fill="#cc1111"/>
+</svg>

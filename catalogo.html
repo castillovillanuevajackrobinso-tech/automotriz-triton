@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Refacciones — Automotriz Tritón</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rojo: #e02020;
+      --rojo-oscuro: #b01818;
+      --negro: #0d0d0d;
+      --gris-oscuro: #1a1a1a;
+      --gris-medio: #2a2a2a;
+      --gris-borde: #333;
+      --gris-claro: #aaaaaa;
+      --blanco: #f5f5f5;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--negro); color: var(--blanco); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,13,13,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--rojo);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px; gap: 1rem;
+    }
+    .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--blanco); text-decoration: none; white-space: nowrap; }
+    .nav-logo span { color: var(--rojo); }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--gris-claro); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { color: var(--rojo); }
+    .nav-wa { background: #25d366; color: #fff; padding: 0.5rem 1.1rem; border-radius: 4px; font-size: 0.82rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+    .nav-wa:hover { background: #1da851; }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ── HERO SEARCH ── */
+    .hero-search {
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a0505 100%);
+      border-bottom: 2px solid #222;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .hero-search h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.4rem; }
+    .hero-search h1 span { color: var(--rojo); }
+    .hero-search p { color: var(--gris-claro); font-size: 0.95rem; margin-bottom: 1.75rem; }
+
+    .search-box {
+      display: flex; max-width: 620px; margin: 0 auto;
+      background: var(--gris-medio); border: 2px solid var(--gris-borde);
+      border-radius: 8px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .search-box:focus-within { border-color: var(--rojo); }
+    .search-box input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--blanco); font-size: 1rem; padding: 0.85rem 1.25rem;
+    }
+    .search-box input::placeholder { color: #666; }
+    .search-box button {
+      background: var(--rojo); border: none; color: #fff; cursor: pointer;
+      padding: 0 1.5rem; font-size: 1.1rem; font-weight: 700; transition: background 0.2s;
+    }
+    .search-box button:hover { background: var(--rojo-oscuro); }
+
+    .search-stats { margin-top: 1rem; font-size: 0.85rem; color: var(--gris-claro); min-height: 1.2em; }
+
+    /* ── FILTROS CATEGORÍA ── */
+    .filtros {
+      background: var(--gris-oscuro);
+      border-bottom: 1px solid var(--gris-borde);
+      padding: 1rem 2rem;
+      display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;
+    }
+    .filtro-btn {
+      background: var(--gris-medio); border: 1px solid var(--gris-borde);
+      color: var(--gris-claro); padding: 0.45rem 1.1rem;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filtro-btn:hover { border-color: var(--rojo); color: var(--blanco); }
+    .filtro-btn.activo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+
+    /* ── GRID ── */
+    .catalogo-wrapper { padding: 2.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+    .sin-resultados {
+      text-align: center; padding: 4rem 2rem; display: none;
+    }
+    .sin-resultados .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .sin-resultados h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .sin-resultados p { color: var(--gris-claro); font-size: 0.9rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--gris-oscuro); border: 1px solid var(--gris-borde);
+      border-radius: 10px; overflow: hidden; cursor: pointer;
+      transition: all 0.25s; display: flex; flex-direction: column;
+    }
+    .card:hover { border-color: var(--rojo); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(224,32,32,0.15); }
+
+    .card-img {
+      width: 100%; height: 190px; object-fit: cover;
+      background: var(--gris-medio); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .card-img .placeholder-icon { font-size: 4rem; opacity: 0.3; }
+
+    .card-cat-tag {
+      position: absolute; top: 0.6rem; left: 0.6rem;
+      background: var(--rojo); color: #fff;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      padding: 0.2rem 0.6rem; border-radius: 3px;
+    }
+
+    .card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .card-num {
+      font-size: 0.75rem; font-weight: 700; color: var(--rojo);
+      text-transform: uppercase; letter-spacing: 1px;
+      background: rgba(224,32,32,0.1); border: 1px solid rgba(224,32,32,0.2);
+      display: inline-block; padding: 0.2rem 0.6rem; border-radius: 3px; align-self: flex-start;
+    }
+    .card-nombre { font-size: 1rem; font-weight: 700; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-nombre-sub { font-size: 0.78rem; color: var(--gris-claro); font-weight: 400; text-transform: none; letter-spacing: 0; margin-top: 0.15rem; }
+    .card-marca { font-size: 0.8rem; color: var(--gris-claro); }
+
+    .card-specs { margin-top: 0.5rem; border-top: 1px solid var(--gris-borde); padding-top: 0.75rem; }
+    .spec-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 0.2rem 0; }
+    .spec-key { color: var(--gris-claro); }
+    .spec-val { font-weight: 600; text-align: right; max-width: 60%; }
+
+    .card-compat { font-size: 0.75rem; color: #666; margin-top: 0.5rem; border-top: 1px solid var(--gris-borde); padding-top: 0.5rem; }
+
+    .card-footer { padding: 0.75rem 1.25rem; border-top: 1px solid var(--gris-borde); }
+    .btn-wa-card {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: #25d366; color: #fff; text-decoration: none;
+      border-radius: 5px; padding: 0.6rem; font-size: 0.85rem; font-weight: 700;
+      transition: background 0.2s; width: 100%;
+    }
+    .btn-wa-card:hover { background: #1da851; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85); z-index: 500;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--gris-oscuro); border: 1px solid var(--gris-borde);
+      border-radius: 12px; max-width: 780px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
+    @media (max-width: 600px) { .modal { grid-template-columns: 1fr; } }
+
+    .modal-img {
+      background: var(--gris-medio); min-height: 300px;
+      display: flex; align-items: center; justify-content: center; position: relative;
+      border-radius: 12px 0 0 12px; overflow: hidden;
+    }
+    @media (max-width: 600px) { .modal-img { border-radius: 12px 12px 0 0; min-height: 220px; } }
+    .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-img .placeholder-icon { font-size: 6rem; opacity: 0.25; }
+
+    .modal-info { padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(0,0,0,0.6); border: none; color: #fff;
+      width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 10;
+    }
+    .modal-close:hover { background: var(--rojo); }
+
+    .modal-cat { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--rojo); }
+    .modal-num { font-size: 0.8rem; color: var(--gris-claro); font-family: monospace; }
+    .modal-nombre { font-size: 1.4rem; font-weight: 900; line-height: 1.2; }
+    .modal-marca { font-size: 0.9rem; color: var(--gris-claro); }
+
+    .modal-specs-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gris-claro); margin-top: 0.5rem; border-top: 1px solid var(--gris-borde); padding-top: 0.75rem; }
+    .modal-specs-table { width: 100%; border-collapse: collapse; }
+    .modal-specs-table tr { border-bottom: 1px solid var(--gris-borde); }
+    .modal-specs-table tr:last-child { border-bottom: none; }
+    .modal-specs-table td { padding: 0.45rem 0; font-size: 0.85rem; }
+    .modal-specs-table td:first-child { color: var(--gris-claro); width: 45%; }
+    .modal-specs-table td:last-child { font-weight: 600; }
+
+    .modal-compat-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gris-claro); margin-top: 0.5rem; border-top: 1px solid var(--gris-borde); padding-top: 0.75rem; }
+    .modal-compat-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .compat-tag { background: var(--gris-medio); border: 1px solid var(--gris-borde); padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; color: var(--gris-claro); }
+
+    .modal-btns { margin-top: auto; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .btn-wa-modal {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: #25d366; color: #fff; text-decoration: none;
+      border-radius: 6px; padding: 0.8rem; font-size: 0.95rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .btn-wa-modal:hover { background: #1da851; }
+
+    /* ── FOOTER ── */
+    footer { background: #080808; border-top: 2px solid #222; text-align: center; padding: 1.5rem 2rem; color: var(--gris-claro); font-size: 0.82rem; }
+    footer span { color: var(--rojo); }
+
+    /* ── WA FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: #25d366; color: #fff; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: all 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* highlight término buscado */
+    mark { background: rgba(224,32,32,0.25); color: inherit; border-radius: 2px; padding: 0 2px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">TRITÓN<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="catalogo.html" class="active">Catálogo</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-wa" href="https://wa.me/529848761114?text=Hola,%20busco%20una%20refacción" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+</nav>
+
+<!-- HERO SEARCH -->
+<div class="hero-search">
+  <h1>Catálogo de <span>Refacciones</span></h1>
+  <p>Busca por número de parte, nombre o marca — Solo refacciones nuevas para motor a gasolina</p>
+  <div class="search-box">
+    <input type="text" id="busqueda" placeholder="Ej: ACDelco-41-162, bujía, pistón, NGK..." autocomplete="off" />
+    <button onclick="limpiarBusqueda()" id="btn-limpiar" style="display:none; background:#444; font-size:0.9rem;">✕</button>
+    <button onclick="document.getElementById('busqueda').focus()">🔍</button>
+  </div>
+  <div class="search-stats" id="search-stats"></div>
+</div>
+
+<!-- FILTROS -->
+<div class="filtros">
+  <button class="filtro-btn activo" data-cat="todos" onclick="filtrarCategoria(this)">Todos</button>
+  <button class="filtro-btn" data-cat="encendido" onclick="filtrarCategoria(this)">⚡ Encendido</button>
+  <button class="filtro-btn" data-cat="motor" onclick="filtrarCategoria(this)">🔩 Motor</button>
+  <button class="filtro-btn" data-cat="filtros" onclick="filtrarCategoria(this)">🔍 Filtros</button>
+  <button class="filtro-btn" data-cat="enfriamiento" onclick="filtrarCategoria(this)">💧 Enfriamiento</button>
+  <button class="filtro-btn" data-cat="distribucion" onclick="filtrarCategoria(this)">⏱️ Distribución</button>
+  <button class="filtro-btn" data-cat="lubricacion" onclick="filtrarCategoria(this)">🛢️ Lubricación</button>
+</div>
+
+<!-- CATÁLOGO -->
+<div class="catalogo-wrapper">
+  <div class="sin-resultados" id="sin-resultados">
+    <div class="icon">🔎</div>
+    <h3>No se encontraron piezas</h3>
+    <p>Intenta con otro número de parte o nombre. También puedes escribirnos por WhatsApp y buscamos la pieza por ti.</p>
+    <br>
+    <a href="https://wa.me/529848761114?text=Hola,%20busco%20la%20pieza:" target="_blank" rel="noopener noreferrer"
+      style="display:inline-flex;align-items:center;gap:0.5rem;background:#25d366;color:#fff;padding:0.75rem 1.5rem;border-radius:6px;font-weight:700;text-decoration:none;">
+      💬 Preguntar por WhatsApp
+    </a>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="cerrarModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-img" id="modal-img">
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+      <span class="placeholder-icon" id="modal-placeholder">⚙️</span>
+      <img id="modal-foto" src="" alt="" style="display:none; position:absolute; inset:0;" />
+    </div>
+    <div class="modal-info">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-num" id="modal-num"></div>
+      <div class="modal-nombre" id="modal-nombre"></div>
+      <div class="modal-marca" id="modal-marca"></div>
+      <div class="modal-specs-title">Especificaciones</div>
+      <table class="modal-specs-table" id="modal-specs"></table>
+      <div class="modal-compat-title">Compatibilidad</div>
+      <div class="modal-compat-list" id="modal-compat"></div>
+      <div class="modal-btns">
+        <a class="btn-wa-modal" id="modal-wa" href="#" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar disponibilidad
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WA FLOAT -->
+<a class="wa-float" href="https://wa.me/529848761114" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<footer>
+  <p>© 2026 <span>Refaccionaria Automotriz Tritón</span> · Playa del Carmen, Q.Roo · Solo consulta de catálogo, sin ventas en línea</p>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  BASE DE DATOS DE REFACCIONES
+//  Para agregar una pieza nueva, copia un bloque { ... },
+//  pégalo al final de este arreglo y rellena los campos.
+//  Para la foto: pon el archivo en la carpeta img/ y
+//  escribe el nombre en el campo "foto".
+// ════════════════════════════════════════════════════════
+const PIEZAS = [
+  {
+    numero: "NGK-BKR5E-11",
+    nombre: "BUJÍA DE ENCENDIDO TSURU 92-17",
+    categoria: "encendido",
+    marca: "NGK",
+    foto: "NGK-BKR5E-11.svg",
+    icono: "⚡",
+    specs: {
+      "Tipo": "Cobre V-Power",
+      "Gap (mm)": "0.8",
+      "Rosca": "14mm x 1.25",
+      "Longitud": "19 mm",
+      "Hex": "5/8\" (16 mm)"
+    },
+    compatibilidad: ["Nissan Tsuru B13 1.6L 1992-2017","Nissan Sentra B13 1.6L 1992-1999","Nissan Classic 2000-2017"]
+  },
+  {
+    numero: "NGK-BKR5E",
+    nombre: "BUJÍA ESTÁNDAR COBRE NISSAN / VW / TOYOTA",
+    categoria: "encendido",
+    marca: "NGK",
+    foto: "bujia-ngk-cobre.svg",
+    icono: "⚡",
+    specs: {
+      "Tipo": "Cobre V-Power",
+      "Gap (mm)": "0.8",
+      "Rosca": "14mm x 1.25",
+      "Longitud": "19 mm",
+      "Hex": "5/8\" (16mm)"
+    },
+    compatibilidad: ["Nissan Tsuru 1992-2017","VW Sedan 1995-2004","Chevrolet Aveo 2004-2010","Toyota Corolla 1995-2002"]
+  },
+  {
+    numero: "NGK-ILFR6A11",
+    nombre: "BUJÍA IRIDIO LÁSER HONDA CIVIC / COROLLA 06-12",
+    categoria: "encendido",
+    marca: "NGK",
+    foto: "bujia-ngk-iridio.svg",
+    icono: "⚡",
+    specs: {
+      "Tipo": "Iridio láser",
+      "Gap (mm)": "1.1",
+      "Rosca": "14mm x 1.25",
+      "Longitud": "26.5 mm",
+      "Vida útil": "100,000 km"
+    },
+    compatibilidad: ["Honda Civic 2006-2011","Toyota Corolla 2003-2010","Nissan Sentra 2004-2012","Mazda 3 2004-2009"]
+  },
+  {
+    numero: "ACDELCO-41-162",
+    nombre: "BUJÍA PLATINO DOBLE CHEVROLET AVEO / SPARK 06-18",
+    categoria: "encendido",
+    marca: "ACDelco",
+    foto: "bujia-acdelco.svg",
+    icono: "⚡",
+    specs: {
+      "Tipo": "Platino doble",
+      "Gap (mm)": "0.9",
+      "Rosca": "14mm x 1.25",
+      "Longitud": "19 mm",
+      "Vida útil": "60,000 km"
+    },
+    compatibilidad: ["Chevrolet Aveo 2006-2018","Chevrolet Spark 2007-2015","Pontiac G3 2007-2009"]
+  },
+  {
+    numero: "DENSO-FK20HR11",
+    nombre: "BOBINA DE ENCENDIDO TOYOTA COROLLA / CAMRY 03-08",
+    categoria: "encendido",
+    marca: "Denso",
+    foto: "bobina-denso.svg",
+    icono: "⚡",
+    specs: {
+      "Tensión primaria": "12V",
+      "Tensión secundaria": "35 kV",
+      "Res. primaria": "0.5–0.7 Ω",
+      "Res. secundaria": "10.8–14.8 kΩ",
+      "Tipo": "Crayon (lápiz)"
+    },
+    compatibilidad: ["Toyota Corolla 2003-2008","Toyota Camry 2002-2006","Lexus IS300 2001-2005"]
+  },
+  {
+    numero: "MAHLE-KS-500",
+    nombre: "KIT PISTÓN Y ANILLOS NISSAN TSURU / SENTRA 1.6L",
+    categoria: "motor",
+    marca: "Mahle",
+    foto: "piston-mahle.svg",
+    icono: "🔩",
+    specs: {
+      "Diámetro": "75.5 mm STD",
+      "Material": "Aluminio forjado",
+      "Anillos": "Compresión x2 + aceite",
+      "Altura comp.": "31.5 mm",
+      "Motor": "GA16DE 1.6L"
+    },
+    compatibilidad: ["Nissan Tsuru B13 1.6L 1992-2017","Nissan Sentra B13 1.6L 1992-1999"]
+  },
+  {
+    numero: "VICTOR-VS50562",
+    nombre: "JUNTA DE CABEZA MLS CHEVY 1.4L / MATIZ 1.0L",
+    categoria: "motor",
+    marca: "Victor Reinz",
+    foto: "junta-victor.svg",
+    icono: "🛡️",
+    specs: {
+      "Material": "Acero multicapa MLS",
+      "Capas": "3 · Espesor 1.2 mm",
+      "Diámetro bore": "79 mm",
+      "Incluye": "Junta de cabeza"
+    },
+    compatibilidad: ["Chevy 1.4L 2000-2008","Pontiac Matiz 1.0L 2006-2010","Daewoo Matiz 1.0L"]
+  },
+  {
+    numero: "MAHLE-52281",
+    nombre: "KIT VÁLVULAS ADMISIÓN VW GOLF / JETTA 1.6L 98-09",
+    categoria: "motor",
+    marca: "Mahle",
+    foto: "valvula-mahle.svg",
+    icono: "⚙️",
+    specs: {
+      "Tipo": "Admisión",
+      "Diámetro cabeza": "39 mm",
+      "Diámetro vástago": "6 mm",
+      "Longitud total": "107.5 mm",
+      "Material": "Acero inoxidable"
+    },
+    compatibilidad: ["VW Golf IV 1.6L 1998-2004","VW Jetta IV 1.6L 1998-2004","VW Polo 1.6L 2002-2009"]
+  },
+  {
+    numero: "WIX-51348",
+    nombre: "FILTRO DE ACEITE CHEVROLET AVEO / SPARK / CHEVY",
+    categoria: "filtros",
+    marca: "WIX",
+    foto: "filtro-aceite-wix.svg",
+    icono: "🔍",
+    specs: {
+      "Tipo": "Cartucho roscado",
+      "Rosca": "3/4\" – 16",
+      "Altura": "89 mm · Diám. 76 mm",
+      "Bypass": "16 psi",
+      "Anti-drenado": "Incluye válvula"
+    },
+    compatibilidad: ["Chevrolet Aveo 2004-2018","Chevrolet Spark 2005-2015","Chevy 2000-2008","Pontiac G3"]
+  },
+  {
+    numero: "FRAM-CA8039",
+    nombre: "FILTRO DE AIRE NISSAN SENTRA / TSURU / TIIDA",
+    categoria: "filtros",
+    marca: "Fram",
+    foto: "filtro-aire-fram.svg",
+    icono: "🔍",
+    specs: {
+      "Tipo": "Panel plano",
+      "Medidas": "245 × 165 × 40 mm",
+      "Material": "Fibra sintética",
+      "Eficiencia": "Alta filtración"
+    },
+    compatibilidad: ["Nissan Sentra 2004-2012","Nissan Tsuru 1992-2017","Nissan Tiida 2006-2015"]
+  },
+  {
+    numero: "BOSCH-0450905071",
+    nombre: "FILTRO DE COMBUSTIBLE VW JETTA / GOLF / BEETLE",
+    categoria: "filtros",
+    marca: "Bosch",
+    foto: "filtro-combustible-bosch.svg",
+    icono: "🔍",
+    specs: {
+      "Tipo": "En línea",
+      "Presión máx.": "10 bar",
+      "Micronaje": "10 µm",
+      "Longitud": "160 mm"
+    },
+    compatibilidad: ["VW Jetta 1.6/2.0L 1993-2007","VW Golf 1.6/1.8L 1993-2004","VW Beetle 1998-2011"]
+  },
+  {
+    numero: "GATES-36486",
+    nombre: "BOMBA DE AGUA TOYOTA COROLLA / MATRIX 1.8L 03-08",
+    categoria: "enfriamiento",
+    marca: "Gates",
+    foto: "bomba-agua-gates.svg",
+    icono: "💧",
+    specs: {
+      "Impulsor": "Metal · 6 aspas",
+      "Sello": "Mecánico",
+      "Incluye": "Junta de montaje",
+      "Motor": "1ZZ-FE 1.8L"
+    },
+    compatibilidad: ["Toyota Corolla 1.8L 2003-2008","Toyota Matrix 1.8L 2003-2008","Pontiac Vibe 1.8L 2003-2008"]
+  },
+  {
+    numero: "STANT-14730",
+    nombre: "TERMOSTATO 88°C HONDA CIVIC / ACCORD 01-08",
+    categoria: "enfriamiento",
+    marca: "Stant",
+    foto: "termostato-stant.svg",
+    icono: "🌡️",
+    specs: {
+      "Temp. apertura": "88°C (190°F)",
+      "Temp. plena": "103°C",
+      "Apertura máx.": "8 mm",
+      "Incluye": "Junta de montaje"
+    },
+    compatibilidad: ["Honda Civic 2001-2006 1.7L","Honda Accord 2003-2007 2.4L","Acura TSX 2004-2008"]
+  },
+  {
+    numero: "GATES-TCK328",
+    nombre: "KIT BANDA DE DISTRIBUCIÓN VW JETTA / GOLF 1.8T 00-06",
+    categoria: "distribucion",
+    marca: "Gates",
+    foto: "banda-gates.svg",
+    icono: "⏱️",
+    specs: {
+      "Kit incluye": "Banda + tensor + polea",
+      "Dientes": "133 · Ancho 25.4 mm",
+      "Tensor": "Hidráulico",
+      "Cambio": "90,000 km"
+    },
+    compatibilidad: ["VW Golf 1.8T 2000-2005","VW Jetta 1.8T 2000-2005","Audi A4 1.8T 2000-2006","Audi TT 1.8T"]
+  },
+  {
+    numero: "MELLING-10295",
+    nombre: "BOMBA DE ACEITE ALTA PRESIÓN SILVERADO / SIERRA 5.3L",
+    categoria: "lubricacion",
+    marca: "Melling",
+    foto: "bomba-aceite-melling.svg",
+    icono: "🛢️",
+    specs: {
+      "Tipo": "Rotor desplazamiento",
+      "Presión máx.": "60 psi",
+      "Caudal": "Alto volumen +10%",
+      "Incluye": "Válvula de alivio"
+    },
+    compatibilidad: ["Chevrolet Silverado 5.3L 2007-2013","GMC Sierra 5.3L 2007-2013","Chevrolet Tahoe 5.3L 2007-2014"]
+  },
+  {
+    numero: "GATES-TCK195",
+    nombre: "CADENA DE DISTRIBUCIÓN HONDA CIVIC / CR-V 1.8L 06-12",
+    categoria: "distribucion",
+    marca: "Gates",
+    foto: "cadena-gates.svg",
+    icono: "⏱️",
+    specs: {
+      "Tipo": "Cadena simple",
+      "Eslabones": "128 · Pitch 9.525 mm",
+      "Incluye": "Guías y tensor",
+      "Cambio": "150,000 km"
+    },
+    compatibilidad: ["Honda Civic 1.8L 2006-2011","Honda CR-V 2.4L 2007-2011","Honda Accord 2.4L 2008-2012"]
+  }
+];
+
+// ── Estado global ──
+let categoriaActiva = "todos";
+let terminoBusqueda = "";
+
+// ── Render inicial ──
+renderGrid();
+
+// ── Búsqueda en tiempo real ──
+const inputBusqueda = document.getElementById("busqueda");
+inputBusqueda.addEventListener("input", () => {
+  terminoBusqueda = inputBusqueda.value.trim().toLowerCase();
+  document.getElementById("btn-limpiar").style.display = terminoBusqueda ? "flex" : "none";
+  renderGrid();
+});
+
+function limpiarBusqueda() {
+  inputBusqueda.value = "";
+  terminoBusqueda = "";
+  document.getElementById("btn-limpiar").style.display = "none";
+  renderGrid();
+  inputBusqueda.focus();
+}
+
+function filtrarCategoria(btn) {
+  document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("activo"));
+  btn.classList.add("activo");
+  categoriaActiva = btn.dataset.cat;
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById("grid");
+  const sinRes = document.getElementById("sin-resultados");
+  const stats = document.getElementById("search-stats");
+
+  const resultados = PIEZAS.filter(p => {
+    const matchCat = categoriaActiva === "todos" || p.categoria === categoriaActiva;
+    if (!terminoBusqueda) return matchCat;
+    const haystack = [p.numero, p.nombre, p.marca, ...Object.values(p.specs), ...p.compatibilidad].join(" ").toLowerCase();
+    return matchCat && haystack.includes(terminoBusqueda);
+  });
+
+  grid.innerHTML = "";
+
+  if (resultados.length === 0) {
+    sinRes.style.display = "block";
+    stats.textContent = "Sin resultados";
+    return;
+  }
+
+  sinRes.style.display = "none";
+  stats.textContent = terminoBusqueda
+    ? `${resultados.length} pieza${resultados.length !== 1 ? "s" : ""} encontrada${resultados.length !== 1 ? "s" : ""} para "${terminoBusqueda}"`
+    : `${resultados.length} pieza${resultados.length !== 1 ? "s" : ""} en el catálogo`;
+
+  resultados.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.onclick = () => abrirModal(p);
+
+    const especsHtml = Object.entries(p.specs).slice(0, 3).map(([k, v]) =>
+      `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
+    ).join("");
+
+    const imgHtml = p.foto
+      ? `<img src="img/${p.foto}" alt="${p.nombre}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="placeholder-icon" style="display:none;">${p.icono}</div>`
+      : `<div class="placeholder-icon">${p.icono}</div>`;
+
+    card.innerHTML = `
+      <div class="card-img">
+        <div class="card-cat-tag">${labelCategoria(p.categoria)}</div>
+        ${imgHtml}
+      </div>
+      <div class="card-body">
+        <div class="card-nombre">${resaltar(p.nombre)}</div>
+        <div class="card-nombre-sub">No. de parte: <strong>${p.numero}</strong></div>
+        <div class="card-marca">${p.marca}</div>
+        <div class="card-specs">${especsHtml}</div>
+        <div class="card-compat">🚗 ${p.compatibilidad.slice(0,2).join(" · ")}${p.compatibilidad.length > 2 ? ` +${p.compatibilidad.length - 2} más` : ""}</div>
+      </div>
+      <div class="card-footer">
+        <a class="btn-wa-card" href="https://wa.me/529848761114?text=Hola,%20busco%20la%20refacci%C3%B3n%20${encodeURIComponent(p.numero)}%20-%20${encodeURIComponent(p.nombre)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+          💬 Consultar disponibilidad
+        </a>
+      </div>`;
+
+    grid.appendChild(card);
+  });
+}
+
+function abrirModal(p) {
+  const overlay = document.getElementById("modal-overlay");
+
+  document.getElementById("modal-cat").textContent = labelCategoria(p.categoria);
+  document.getElementById("modal-num").textContent = "No. de parte: " + p.numero;
+  document.getElementById("modal-nombre").textContent = p.nombre;
+  document.getElementById("modal-marca").textContent = "Marca: " + p.marca;
+
+  const foto = document.getElementById("modal-foto");
+  const placeholder = document.getElementById("modal-placeholder");
+  placeholder.textContent = p.icono;
+
+  if (p.foto) {
+    foto.src = "img/" + p.foto;
+    foto.alt = p.nombre;
+    foto.style.display = "block";
+    foto.onerror = () => { foto.style.display = "none"; placeholder.style.display = "flex"; };
+    placeholder.style.display = "none";
+  } else {
+    foto.style.display = "none";
+    placeholder.style.display = "flex";
+  }
+
+  const specsTable = document.getElementById("modal-specs");
+  specsTable.innerHTML = Object.entries(p.specs).map(([k, v]) =>
+    `<tr><td>${k}</td><td>${v}</td></tr>`
+  ).join("");
+
+  const compatDiv = document.getElementById("modal-compat");
+  compatDiv.innerHTML = p.compatibilidad.map(c => `<span class="compat-tag">${c}</span>`).join("");
+
+  const waMsg = `Hola, busco la refacción *${p.numero}* - ${p.nombre}. ¿Está disponible?`;
+  document.getElementById("modal-wa").href = `https://wa.me/529848761114?text=${encodeURIComponent(waMsg)}`;
+
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarModal(e) {
+  if (!e || e.target === document.getElementById("modal-overlay") || e.currentTarget.tagName === "BUTTON") {
+    document.getElementById("modal-overlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+}
+
+document.addEventListener("keydown", e => { if (e.key === "Escape") cerrarModal(); });
+
+function labelCategoria(cat) {
+  const labels = { encendido: "Encendido", motor: "Motor", filtros: "Filtros", enfriamiento: "Enfriamiento", distribucion: "Distribución", lubricacion: "Lubricación" };
+  return labels[cat] || cat;
+}
+
+function resaltar(texto) {
+  if (!terminoBusqueda) return texto;
+  const re = new RegExp(`(${terminoBusqueda.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "gi");
+  return texto.replace(re, "<mark>$1</mark>");
+}
+</script>
+</body>
+</html>

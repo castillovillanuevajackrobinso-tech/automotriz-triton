@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#252525"/></linearGradient>
+    <linearGradient id="alumGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5a5a5a"/><stop offset="20%" stop-color="#c8c8c8"/><stop offset="50%" stop-color="#e8e8e8"/><stop offset="80%" stop-color="#b0b0b0"/><stop offset="100%" stop-color="#4a4a4a"/></linearGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#333"/><stop offset="40%" stop-color="#aaa"/><stop offset="60%" stop-color="#888"/><stop offset="100%" stop-color="#222"/></linearGradient>
+    <linearGradient id="crownGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d0d0d0"/><stop offset="100%" stop-color="#888"/></linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#bg)" rx="12"/>
+  <rect x="50" y="18" width="200" height="28" rx="4" fill="#2a7a2a"/>
+  <text x="150" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" letter-spacing="2">MAHLE</text>
+  <text x="150" y="64" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#aaa" letter-spacing="1">KS-500  ·  Kit Pistón y Anillos</text>
+  <g transform="translate(150,230)">
+    <!-- Piston crown top (flat) -->
+    <ellipse cx="0" cy="-115" rx="70" ry="14" fill="url(#crownGrad)"/>
+    <!-- Piston body -->
+    <rect x="-70" y="-115" width="140" height="100" fill="url(#alumGrad)"/>
+    <!-- Crown detail (valve reliefs) -->
+    <ellipse cx="-22" cy="-112" rx="14" ry="4" fill="#aaa" opacity="0.5"/>
+    <ellipse cx="22" cy="-112" rx="14" ry="4" fill="#aaa" opacity="0.5"/>
+    <!-- Ring grooves -->
+    <rect x="-71" y="-95" width="142" height="6" rx="0" fill="url(#ringGrad)"/>
+    <rect x="-71" y="-80" width="142" height="6" rx="0" fill="url(#ringGrad)"/>
+    <rect x="-71" y="-65" width="142" height="8" rx="0" fill="#2a2a2a"/><!-- oil ring groove -->
+    <!-- Skirt lower body -->
+    <rect x="-68" y="-57" width="136" height="42" fill="#b8b8b8"/>
+    <!-- Pin bore holes (side view) -->
+    <ellipse cx="-70" cy="-36" rx="10" ry="18" fill="#888"/>
+    <ellipse cx="70" cy="-36" rx="10" ry="18" fill="#777"/>
+    <!-- Piston bottom edge -->
+    <ellipse cx="0" cy="-15" rx="68" ry="8" fill="#999"/>
+    <!-- Connecting rod stub -->
+    <rect x="-12" y="-15" width="24" height="55" fill="#bbb"/>
+    <ellipse cx="0" cy="40" rx="18" ry="10" fill="#aaa"/>
+    <!-- Rings visible on right side -->
+    <rect x="68" y="-98" width="8" height="5" rx="1" fill="#ccc"/>
+    <rect x="68" y="-83" width="8" height="5" rx="1" fill="#ccc"/>
+    <rect x="68" y="-68" width="8" height="7" rx="1" fill="#aaa"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#aaa">
+    <text x="20" y="340">Diámetro:</text><text x="110" y="340" fill="#eee" font-weight="600">75.5 mm STD</text>
+    <text x="20" y="358">Material:</text><text x="110" y="358" fill="#eee" font-weight="600">Aluminio forjado</text>
+    <text x="20" y="376">Anillos:</text><text x="110" y="376" fill="#eee" font-weight="600">Compresión x2 + aceite</text>
+    <text x="20" y="394">Motor:</text><text x="110" y="394" fill="#eee" font-weight="600">Nissan GA16DE 1.6L</text>
+  </g>
+  <rect x="0" y="408" width="300" height="12" rx="0" fill="#2a7a2a"/>
+</svg>

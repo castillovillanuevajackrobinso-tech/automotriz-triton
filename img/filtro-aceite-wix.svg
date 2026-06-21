@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#252525"/></linearGradient>
+    <linearGradient id="canGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5a2000"/><stop offset="20%" stop-color="#c04000"/><stop offset="50%" stop-color="#e05500"/><stop offset="80%" stop-color="#b03800"/><stop offset="100%" stop-color="#4a1800"/></linearGradient>
+    <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#444"/><stop offset="40%" stop-color="#ccc"/><stop offset="60%" stop-color="#aaa"/><stop offset="100%" stop-color="#333"/></linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#bg)" rx="12"/>
+  <rect x="60" y="18" width="180" height="28" rx="4" fill="#cc4400"/>
+  <text x="150" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" letter-spacing="3">WIX</text>
+  <text x="150" y="64" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#aaa" letter-spacing="1">51348  ·  Filtro de Aceite</text>
+  <g transform="translate(150,225)">
+    <!-- Top metal cap -->
+    <ellipse cx="0" cy="-120" rx="52" ry="10" fill="url(#metalGrad)"/>
+    <rect x="-52" y="-120" width="104" height="16" fill="#888"/>
+    <ellipse cx="0" cy="-104" rx="52" ry="10" fill="#666"/>
+    <!-- Can body -->
+    <rect x="-52" y="-104" width="104" height="155" fill="url(#canGrad)"/>
+    <!-- Seam lines -->
+    <line x1="-52" y1="-60" x2="52" y2="-60" stroke="#c04000" stroke-width="1.5"/>
+    <line x1="-52" y1="20" x2="52" y2="20" stroke="#c04000" stroke-width="1.5"/>
+    <!-- WIX logo area -->
+    <rect x="-45" y="-85" width="90" height="50" rx="3" fill="rgba(0,0,0,0.3)"/>
+    <text x="0" y="-65" text-anchor="middle" font-family="Arial Black,Arial" font-size="20" fill="white" font-weight="900" letter-spacing="3">WIX</text>
+    <text x="0" y="-52" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#ffaa44" letter-spacing="1">FILTERS</text>
+    <text x="0" y="-38" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="white">51348</text>
+    <!-- Bottom metal base with thread -->
+    <ellipse cx="0" cy="51" rx="52" ry="10" fill="#555"/>
+    <rect x="-52" y="51" width="104" height="20" fill="#555"/>
+    <ellipse cx="0" cy="71" rx="52" ry="10" fill="#444"/>
+    <!-- Center thread -->
+    <circle cx="0" cy="71" r="14" fill="#333"/>
+    <circle cx="0" cy="71" r="10" fill="#222" stroke="#888" stroke-width="2"/>
+    <text x="0" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="#888">3/4-16</text>
+    <!-- Anti-drainback valve indicator -->
+    <text x="0" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#aaa">Válvula anti-retorno</text>
+  </g>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#aaa">
+    <text x="20" y="340">Rosca:</text><text x="100" y="340" fill="#eee" font-weight="600">3/4" – 16</text>
+    <text x="20" y="358">Altura:</text><text x="100" y="358" fill="#eee" font-weight="600">89 mm</text>
+    <text x="20" y="376">Diámetro:</text><text x="110" y="376" fill="#eee" font-weight="600">76 mm</text>
+    <text x="20" y="394">Motor:</text><text x="100" y="394" fill="#eee" font-weight="600">Aveo / Spark / Chevy</text>
+  </g>
+  <rect x="0" y="408" width="300" height="12" rx="0" fill="#cc4400"/>
+</svg>
